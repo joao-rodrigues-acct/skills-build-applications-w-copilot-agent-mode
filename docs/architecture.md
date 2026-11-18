@@ -28,14 +28,14 @@ OctoFit Tracker is a three-tier application for a school fitness program. The st
 
 ## Implementation decisions
 
-- **Presentation tier decision:** Keep React pages and shared API-client responsibilities in `octofit-tracker/frontend/src`. Pages call relative `/api` endpoints through the shared client and present loading, empty, error, and success states; they do not own business rules or persistence.
-- **Logic tier decision:** Keep HTTP handling and application behavior in Express/TypeScript routes and services under `octofit-tracker/backend/src`. Routes validate requests and return deliberate client errors for invalid input rather than leaking database cast errors.
-- **Data tier decision:** Define persistence and field validation in the Mongoose models under `octofit-tracker/backend/src/models`; keep representative, repeatable seed data in `src/scripts/seed.ts`. MongoDB remains on port `27017`.
-- **Activity tracking approach:** Validate that submitted user and team IDs are well-formed and refer to existing records. Create and list activities with the submitted user, team, type, and minutes, plus computed points and an occurrence date.
-- **Team management approach:** Create and list teams while retaining their name, mascot, and members. Reject a missing team name with `400`.
-- **Leaderboard approach:** Aggregate activity points by team, sort from highest total to lowest, and return each team name, total points, and 1-based rank.
-- **Workout suggestions approach:** Match the requested email to a user, then recommend workouts based on that user's goal or recent activity and explain the recommendation. Return a deliberate 4xx response when no user matches.
-- **Implementation order:** Complete data models and validation first, implement and verify API contracts second, and finish React presentation last. This keeps each tier dependent on an already-defined contract.
+- Presentation tier decision: Keep React pages and shared API-client responsibilities in `octofit-tracker/frontend/src`. Pages call relative `/api` endpoints through the shared client and present loading, empty, error, and success states; they do not own business rules or persistence.
+- Logic tier decision: Keep HTTP handling and application behavior in Express/TypeScript routes and services under `octofit-tracker/backend/src`. Routes validate requests and return deliberate client errors for invalid input rather than leaking database cast errors.
+- Data tier decision: Define persistence and field validation in the Mongoose models under `octofit-tracker/backend/src/models`; keep representative, repeatable seed data in `src/scripts/seed.ts`. MongoDB remains on port `27017`.
+- Activity tracking approach: Validate that submitted user and team IDs are well-formed and refer to existing records. Create and list activities with the submitted user, team, type, and minutes, plus computed points and an occurrence date.
+- Team management approach: Create and list teams while retaining their name, mascot, and members. Reject a missing team name with `400`.
+- Leaderboard approach: Aggregate activity points by team, sort from highest total to lowest, and return each team name, total points, and 1-based rank.
+- Workout suggestions approach: Match the requested email to a user, then recommend workouts based on that user's goal or recent activity and explain the recommendation. Return a deliberate 4xx response when no user matches.
+- Implementation order: Complete data models and validation first, implement and verify API contracts second, and finish React presentation last. This keeps each tier dependent on an already-defined contract.
 
 ## Test plan
 
